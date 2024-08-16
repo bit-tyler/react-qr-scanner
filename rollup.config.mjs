@@ -34,11 +34,10 @@ export default [
                 exclude: ['**/stories/**']
             }),
             copy({
-                targets: [
-                    { src: 'src/assets/*', dest: 'dist/assets' }
-                ]
+                targets: [{ src: 'src/assets/*', dest: 'dist/assets' }]
             }),
-            terser()],
+            terser()
+        ],
         external: [
             'react',
             'react-dom',
