@@ -1753,6 +1753,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@bit-tyler/react-qr-scanner@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@bit-tyler/react-qr-scanner@workspace:."
+  dependencies:
+    "@rollup/plugin-commonjs": "npm:^26.0.1"
+    "@rollup/plugin-terser": "npm:^0.4.4"
+    "@rollup/plugin-typescript": "npm:^11.1.6"
+    "@storybook/addon-essentials": "npm:^8.2.9"
+    "@storybook/addon-interactions": "npm:^8.2.9"
+    "@storybook/addon-links": "npm:^8.2.9"
+    "@storybook/addon-webpack5-compiler-swc": "npm:1.0.5"
+    "@storybook/react": "npm:^8.2.9"
+    "@storybook/react-webpack5": "npm:^8.2.9"
+    "@types/node": "npm:^22.2.0"
+    "@types/react": "npm:^18.3.3"
+    "@types/react-dom": "npm:^18.3.0"
+    barcode-detector: "npm:^2.2.7"
+    rollup: "npm:^4.20.0"
+    rollup-plugin-copy: "npm:^3.5.0"
+    rollup-plugin-dts: "npm:^6.1.1"
+    storybook: "npm:8.2.9"
+    typescript: "npm:^5.5.4"
+    webrtc-adapter: "npm:9.0.1"
+  peerDependencies:
+    react: ">= 16"
+    react-dom: ">= 16"
+  languageName: unknown
+  linkType: soft
+
 "@esbuild/aix-ppc64@npm:0.21.5":
   version: 0.21.5
   resolution: "@esbuild/aix-ppc64@npm:0.21.5"
@@ -3620,35 +3649,6 @@ __metadata:
   checksum: 0eb147f39eab2830c29120d17e8bfba5aa15dedb940a7378070c67d4de08e9ba8d34068522e15e6b4db94ecaed4ad520e1e517588a36a348d1aa160bc36156ea
   languageName: node
   linkType: hard
-
-"@yudiel/react-qr-scanner@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@yudiel/react-qr-scanner@workspace:."
-  dependencies:
-    "@rollup/plugin-commonjs": "npm:^26.0.1"
-    "@rollup/plugin-terser": "npm:^0.4.4"
-    "@rollup/plugin-typescript": "npm:^11.1.6"
-    "@storybook/addon-essentials": "npm:^8.2.9"
-    "@storybook/addon-interactions": "npm:^8.2.9"
-    "@storybook/addon-links": "npm:^8.2.9"
-    "@storybook/addon-webpack5-compiler-swc": "npm:1.0.5"
-    "@storybook/react": "npm:^8.2.9"
-    "@storybook/react-webpack5": "npm:^8.2.9"
-    "@types/node": "npm:^22.2.0"
-    "@types/react": "npm:^18.3.3"
-    "@types/react-dom": "npm:^18.3.0"
-    barcode-detector: "npm:^2.2.7"
-    rollup: "npm:^4.20.0"
-    rollup-plugin-copy: "npm:^3.5.0"
-    rollup-plugin-dts: "npm:^6.1.1"
-    storybook: "npm:8.2.9"
-    typescript: "npm:^5.5.4"
-    webrtc-adapter: "npm:9.0.1"
-  peerDependencies:
-    react: ">= 16"
-    react-dom: ">= 16"
-  languageName: unknown
-  linkType: soft
 
 "abbrev@npm:^2.0.0":
   version: 2.0.0

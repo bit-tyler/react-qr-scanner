@@ -6,12 +6,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yudielcurbelo/react-qr-scanner.git"
+    "url": "git+https://github.com/bit-tyler/react-qr-scanner.git"
   },
   "bugs": {
-    "url": "https://github.com/yudielcurbelo/react-qr-scanner/issues"
+    "url": "https://github.com/bit-tyler/react-qr-scanner/issues"
   },
-  "homepage": "https://github.com/yudielcurbelo/react-qr-scanner#readme",
+  "homepage": "https://github.com/bit-tyler/react-qr-scanner#readme",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
