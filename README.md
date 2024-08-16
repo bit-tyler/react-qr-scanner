@@ -1,6 +1,6 @@
 ### Features
 
--   Scan codes using a smartphone camera or webcam.
+- Scan codes using a smartphone camera or webcam.
 
 ### Demo
 
@@ -20,11 +20,11 @@ npm install @yudiel/react-qr-scanner
 import { Scanner } from '@yudiel/react-qr-scanner';
 
 const App = () => {
-    return <Scanner onScan={(result) => console.log(result)} />;
+  return <Scanner onScan={(result) => console.log(result)} />;
 };
 ```
 
--   There is also a hook to get the available devices `useDevices`.
+- There is also a hook to get the available devices `useDevices`.
 
 ### Supported Formats
 
@@ -62,9 +62,9 @@ const App = () => {
 
 ### Limitations
 
--   Due to browser implementations, the camera can only be accessed over https or localhost.
--   Beep sound in iOS will only work after user interaction.
--   Server-side rendering won't work, so only require the component when rendering in a browser environment.
+- Due to browser implementations, the camera can only be accessed over https or localhost.
+- Beep sound in iOS will only work after user interaction.
+- Server-side rendering won't work, so only require the component when rendering in a browser environment.
 
 ### Types
 
@@ -72,37 +72,37 @@ const App = () => {
 
 ```typescript
 'aztec' |
-    'code_128' |
-    'code_39' |
-    'code_93' |
-    'codabar' |
-    'databar' |
-    'databar_expanded' |
-    'data_matrix' |
-    'dx_film_edge' |
-    'ean_13' |
-    'ean_8' |
-    'itf' |
-    'maxi_code' |
-    'micro_qr_code' |
-    'pdf417' |
-    'qr_code' |
-    'rm_qr_code' |
-    'upc_a' |
-    'upc_e' |
-    'linear_codes' |
-    'matrix_codes' |
-    'unknown';
+  'code_128' |
+  'code_39' |
+  'code_93' |
+  'codabar' |
+  'databar' |
+  'databar_expanded' |
+  'data_matrix' |
+  'dx_film_edge' |
+  'ean_13' |
+  'ean_8' |
+  'itf' |
+  'maxi_code' |
+  'micro_qr_code' |
+  'pdf417' |
+  'qr_code' |
+  'rm_qr_code' |
+  'upc_a' |
+  'upc_e' |
+  'linear_codes' |
+  'matrix_codes' |
+  'unknown';
 ```
 
 #### `IDetectedBarcode`
 
 ```typescript
 export interface IDetectedBarcode {
-    boundingBox: IBoundingBox;
-    cornerPoints: IPoint[];
-    format: string;
-    rawValue: string;
+  boundingBox: IBoundingBox;
+  cornerPoints: IPoint[];
+  format: string;
+  rawValue: string;
 }
 ```
 
@@ -110,12 +110,12 @@ export interface IDetectedBarcode {
 
 ```typescript
 export interface IScannerComponents {
-    tracker?: TrackFunction;
-    audio?: boolean;
-    onOff?: boolean;
-    torch?: boolean;
-    zoom?: boolean;
-    finder?: boolean;
+  tracker?: TrackFunction;
+  audio?: boolean;
+  onOff?: boolean;
+  torch?: boolean;
+  zoom?: boolean;
+  finder?: boolean;
 }
 ```
 
@@ -123,8 +123,8 @@ export interface IScannerComponents {
 
 ```typescript
 export interface IScannerStyles {
-    container?: CSSProperties;
-    video?: CSSProperties;
-    finderBorder?: number;
+  container?: CSSProperties;
+  video?: CSSProperties;
+  finderBorder?: number;
 }
 ```

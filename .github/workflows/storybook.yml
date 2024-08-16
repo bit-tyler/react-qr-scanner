@@ -3,17 +3,17 @@ name: storybook
 on: [push]
 
 jobs:
-    build-and-deploy:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-            - name: Install and Build
-              run: |
-                  yarn install
-                  yarn run build-storybook
-            - name: Deploy
-              uses: JamesIves/github-pages-deploy-action@v4
-              with:
-                  branch: storybook-static
-                  folder: storybook-static
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install and Build
+        run: |
+          yarn install
+          yarn run build-storybook
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: storybook-static
+          folder: storybook-static

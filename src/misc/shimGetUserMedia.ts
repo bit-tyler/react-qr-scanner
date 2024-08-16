@@ -10,19 +10,19 @@ import { detectBrowser } from 'webrtc-adapter/dist/utils';
 import idempotent from '../utilities/idempotent';
 
 export default idempotent(() => {
-    const browserDetails = detectBrowser(window);
+  const browserDetails = detectBrowser(window);
 
-    switch (browserDetails.browser) {
-        case 'chrome':
-            chromeShim(window, browserDetails);
-            break;
-        case 'firefox':
-            firefoxShim(window, browserDetails);
-            break;
-        case 'safari':
-            safariShim(window, browserDetails);
-            break;
-        default:
-            throw new Error('Unsupported browser');
-    }
+  switch (browserDetails.browser) {
+    case 'chrome':
+      chromeShim(window, browserDetails);
+      break;
+    case 'firefox':
+      firefoxShim(window, browserDetails);
+      break;
+    case 'safari':
+      safariShim(window, browserDetails);
+      break;
+    default:
+      throw new Error('Unsupported browser');
+  }
 });
