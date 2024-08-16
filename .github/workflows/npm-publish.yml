@@ -1,8 +1,6 @@
 name: Publish to NPM
 
-on:
-  release:
-    types: [published]
+on: [push]
 
 jobs:
   build:
@@ -24,14 +22,13 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Publish Pre-release
-        if: ${{ github.event.release.prerelease == true }}
-        run: npm publish --tag beta --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - name: Publish Pre-release
+      #   if: ${{ github.event.release.prerelease == true }}
+      #   run: npm publish --tag beta --access public
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish Release
-        if: ${{ github.event.release.prerelease == false }}
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
