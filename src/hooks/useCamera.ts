@@ -91,7 +91,7 @@ export default function useCamera() {
   }, []);
 
   const startCamera = useCallback(
-    async (videoEl: HTMLVideoElement, { constraints, restart = false }: IStartCamera) => {
+    async (videoEl: HTMLVideoElement, { constraints, restart = false, onRestarted }: IStartCamera) => {
       taskQueue.current = taskQueue.current.then((prevTaskResult) => {
         if (prevTaskResult.type === 'start') {
           const {
@@ -102,7 +102,14 @@ export default function useCamera() {
             return prevTaskResult;
           }
 
-          return runStopTask(prevVideoEl, prevStream).then(() => runStartTask(videoEl, constraints));
+          return runStopTask(prevVideoEl, prevStream)
+            .then(() => runStartTask(videoEl, constraints))
+            .then((startTask) => {
+              if (typeof onRestarted === 'function') {
+                onRestarted();
+              }
+              return startTask;
+            });
         }
 
         return runStartTask(videoEl, constraints);
