@@ -23,6 +23,8 @@ export interface IScannerProps {
   allowMultiple?: boolean;
   scanDelay?: number;
   onSetup?: (videoElementRef: RefObject<HTMLVideoElement>, videoTrackRef: RefObject<MediaStreamTrack>) => void;
+  restart?: boolean;
+  onRestarted?: () => void;
 }
 
 function clearCanvas(canvas: HTMLCanvasElement | null) {
@@ -120,6 +122,7 @@ function onFound(detectedCodes: IDetectedBarcode[], videoEl?: HTMLVideoElement |
 
 export function Scanner(props: IScannerProps) {
   const { onScan, constraints, formats = ['qr_code'], paused = false, components, children, styles, classNames, allowMultiple, scanDelay, onError, onSetup } = props;
+  const { onScan, constraints, formats = ['qr_code'], paused = false, components, children, styles, classNames, allowMultiple, scanDelay, onError, onSetup, restart, onRestarted } = props;
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const pauseFrameRef = useRef<HTMLCanvasElement>(null);
@@ -176,9 +179,11 @@ export function Scanner(props: IScannerProps) {
   const cameraSettings = useMemo(() => {
     return {
       constraints: constraintsCached,
-      shouldStream: isMounted && !paused
+      shouldStream: isMounted && !paused,
+      restart,
+      onRestarted
     };
-  }, [constraintsCached, isMounted, paused]);
+  }, [constraintsCached, isMounted, paused, restart]);
 
   const onCameraChange = async () => {
     const videoEl = videoRef.current;
