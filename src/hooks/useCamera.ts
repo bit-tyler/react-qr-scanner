@@ -112,7 +112,12 @@ export default function useCamera() {
             });
         }
 
-        return runStartTask(videoEl, constraints);
+        return runStartTask(videoEl, constraints).then((startTask) => {
+          if (typeof onRestarted === 'function') {
+            onRestarted();
+          }
+          return startTask;
+        });
       });
 
       const taskResult = await taskQueue.current;
