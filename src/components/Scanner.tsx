@@ -121,7 +121,6 @@ function onFound(detectedCodes: IDetectedBarcode[], videoEl?: HTMLVideoElement |
 }
 
 export function Scanner(props: IScannerProps) {
-  const { onScan, constraints, formats = ['qr_code'], paused = false, components, children, styles, classNames, allowMultiple, scanDelay, onError, onSetup } = props;
   const { onScan, constraints, formats = ['qr_code'], paused = false, components, children, styles, classNames, allowMultiple, scanDelay, onError, onSetup, restart, onRestarted } = props;
 
   const videoRef = useRef<HTMLVideoElement>(null);
