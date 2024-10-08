@@ -105,17 +105,13 @@ export default function useCamera() {
           return runStopTask(prevVideoEl, prevStream)
             .then(() => runStartTask(videoEl, constraints))
             .then((startTask) => {
-              if (typeof onRestarted === 'function') {
-                onRestarted();
-              }
+              onRestarted();
               return startTask;
             });
         }
 
         return runStartTask(videoEl, constraints).then((startTask) => {
-          if (typeof onRestarted === 'function') {
-            onRestarted();
-          }
+          onRestarted();
           return startTask;
         });
       });

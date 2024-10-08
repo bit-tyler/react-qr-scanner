@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo, ReactNode } from 'react';
+import React, { useState, useEffect, useRef, useMemo, ReactNode, useCallback } from 'react';
 
 import type { BarcodeFormat } from 'barcode-detector';
 
@@ -174,12 +174,16 @@ export function Scanner(props: IScannerProps) {
     }
   }, [constraints]);
 
+  const memoizedOnRestart = useCallback(() => {
+    if (typeof onRestarted === 'function') onRestarted();
+  }, []);
+
   const cameraSettings = useMemo(() => {
     return {
       constraints: constraintsCached,
       shouldStream: isMounted && !paused,
       restart,
-      onRestarted
+      onRestarted: memoizedOnRestart
     };
   }, [constraintsCached, isMounted, paused, restart]);
 
