@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo, ReactNode } from 'react';
+import React, { useState, useEffect, useRef, useMemo, ReactNode, RefObject } from 'react';
 
 import type { BarcodeFormat } from 'barcode-detector';
 
@@ -22,6 +22,7 @@ export interface IScannerProps {
   classNames?: IScannerClassNames;
   allowMultiple?: boolean;
   scanDelay?: number;
+  onSetup?: (videoElementRef: RefObject<HTMLVideoElement>, videoTrackRef: RefObject<MediaStreamTrack>) => void;
 }
 
 function clearCanvas(canvas: HTMLCanvasElement | null) {
@@ -118,7 +119,7 @@ function onFound(detectedCodes: IDetectedBarcode[], videoEl?: HTMLVideoElement |
 }
 
 export function Scanner(props: IScannerProps) {
-  const { onScan, constraints, formats = ['qr_code'], paused = false, components, children, styles, classNames, allowMultiple, scanDelay, onError } = props;
+  const { onScan, constraints, formats = ['qr_code'], paused = false, components, children, styles, classNames, allowMultiple, scanDelay, onError, onSetup } = props;
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const pauseFrameRef = useRef<HTMLCanvasElement>(null);
@@ -224,6 +225,9 @@ export function Scanner(props: IScannerProps) {
       await camera.stopCamera();
 
       setIsCameraActive(false);
+    }
+    if (onSetup) {
+      onSetup(videoRef, camera.currentVideoTrack);
     }
   };
 

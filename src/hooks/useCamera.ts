@@ -173,6 +173,7 @@ export default function useCamera() {
     settings,
     startCamera,
     stopCamera,
-    updateConstraints
+    updateConstraints,
+    currentVideoTrack
   };
 }
