@@ -17,6 +17,8 @@ interface UseWindowedExposureReturn {
     setVideoElementRef: RefCallback<HTMLVideoElement>;
     setCanvasRef: RefCallback<HTMLCanvasElement>;
     setVideoTrackRef: (v: MediaStreamTrack | null) => void;
+    setPaused: (paused: boolean) => void;
+    paused: boolean
 }
 
 const TARGET_APL = 100; // Default target APL - likely fine for most QR-code scanning purposes
@@ -45,6 +47,7 @@ export function useWindowedExposure(options?: UseWindowedExposureOptions): UseWi
     const [canvasElement, setCanvasElement] = useState<HTMLCanvasElement | null>(null);
     const [videoElement, setVideoElement] = useState<HTMLVideoElement | null>(null);
     const [videoTrack, setVideoTrack] = useState<MediaStreamTrack | null>(null);
+    const [paused, setPaused] = useState(false);
     const currentAPLRef = useRef(TARGET_APL);
     const lastExposureUpdateRef = useRef<number>(0);
     const animationFrameIdRef = useRef<number>(0);
@@ -58,35 +61,16 @@ export function useWindowedExposure(options?: UseWindowedExposureOptions): UseWi
     }, []);
 
     useEffect(() => {
-        if (!videoTrack) return;
+        if (!videoElement || !exposureControlAllowed || !getWindow || !videoTrack) return;
+
         const capabilities = videoTrack.getCapabilities();
-        if (capabilities.exposureTime && capabilities.exposureMode?.includes("manual")) {
-            exposureControlAllowed.current = true;
-            videoTrack.applyConstraints({
-                advanced: [
-                    {
-                        exposureMode: "manual"
-                    }
-                ]
-            } as MediaTrackConstraints);
-        } else {
+        if (!capabilities.exposureTime || !capabilities.exposureMode?.includes("manual")) {
             console.error("The provided video track doesn't support manual exposure");
-            exposureControlAllowed.current = false;
+            return;
         }
-
-        return () => {
-            videoTrack.applyConstraints({
-                advanced: [
-                    { exposureMode: "continuous" }
-                ]
-            } as MediaTrackConstraints);
-        };
-    }, [videoTrack]);
-
-    useEffect(() => {
         const processFrame = () => {
-            if (!videoElement || !exposureControlAllowed || !getWindow || !videoTrack) return;
             if (
+                !paused &&
                 canvasElement &&
                 videoElement.readyState === videoElement.HAVE_ENOUGH_DATA &&
                 exposureIsStale()
@@ -101,7 +85,7 @@ export function useWindowedExposure(options?: UseWindowedExposureOptions): UseWi
 
                     const imageData = ctx.getImageData(0, 0, width, height);
 
-                    // Compute the APL
+                    // Compute the APL, adjust exposure
                     currentAPLRef.current = approxAPL(imageData);
                     adjustExposure(currentAPLRef.current);
                 }
@@ -113,8 +97,13 @@ export function useWindowedExposure(options?: UseWindowedExposureOptions): UseWi
 
         return () => {
             cancelAnimationFrame(animationFrameIdRef.current);
+            videoTrack?.applyConstraints({
+                advanced: [
+                    { exposureMode: "continuous" }
+                ]
+            } as MediaTrackConstraints);
         };
-    }, [targetAPL, videoElement, canvasElement, videoTrack]);
+    }, [targetAPL, videoElement, canvasElement, videoTrack, paused]);
 
     const exposureIsStale = (): boolean => {
         return !adjustingExposure.current &&
@@ -128,7 +117,7 @@ export function useWindowedExposure(options?: UseWindowedExposureOptions): UseWi
     const adjustExposure = (apl: number) => {
         if (!videoTrack) return;
         const capabilities = videoTrack.getCapabilities();
-        if (!capabilities.exposureTime || !exposureControlAllowed.current || !exposureIsStale() || aplInTargetRange(apl)) {
+        if (!capabilities.exposureTime || !exposureIsStale() || aplInTargetRange(apl)) {
             // Only update exposure at most once per updateInterval, and only if it's not close enough to the target
             return;
         }
@@ -143,10 +132,12 @@ export function useWindowedExposure(options?: UseWindowedExposureOptions): UseWi
         if (newExposureTime == exposureTimeRef.current) return;
 
         adjustingExposure.current = true;
-
         videoTrack
             .applyConstraints({
-                advanced: [{ exposureTime: newExposureTime }],
+                advanced: [{
+                    exposureMode: "manual",
+                    exposureTime: newExposureTime
+                }],
             } as MediaTrackConstraints)
             .then(() => {
                 exposureTimeRef.current = newExposureTime;
@@ -165,7 +156,9 @@ export function useWindowedExposure(options?: UseWindowedExposureOptions): UseWi
     return {
         setVideoElementRef,
         setCanvasRef,
-        setVideoTrackRef
+        setVideoTrackRef,
+        setPaused,
+        paused
     };
 }
 

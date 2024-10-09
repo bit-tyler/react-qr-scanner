@@ -48,7 +48,7 @@ export default function useScanner(props: IUseScannerProps) {
             return !contentBefore.includes(code.rawValue);
           });
 
-          const currentScanHasContent = detectedCodes.length > 0;
+          const currentScanHasContent = detectedCodes.length > 0 && detectedCodes.filter(db => db.rawValue.length > 0).length > 0;
 
           let lastOnScan = state.lastOnScan;
 
