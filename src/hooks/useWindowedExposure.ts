@@ -171,7 +171,7 @@ export function useWindowedExposure(options?: UseWindowedExposureOptions): UseWi
 
 function approxAPL(imageData: ImageData, numSamples: number = 1000): number {
     // For 200x200 windows, 1000 samples comes within a few percentage points of the actual APL.
-    // Override sumSamples for larger window sizes, if necessary
+    // Override numSamples for larger window sizes, if necessary
     const { data, width, height } = imageData;
     let sum = 0;
     let count = 0;
