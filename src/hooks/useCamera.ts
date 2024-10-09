@@ -105,14 +105,15 @@ export default function useCamera() {
           return runStopTask(prevVideoEl, prevStream)
             .then(() => runStartTask(videoEl, constraints))
             .then((startTask) => {
-              if (typeof onRestarted === 'function') {
-                onRestarted();
-              }
+              onRestarted();
               return startTask;
             });
         }
 
-        return runStartTask(videoEl, constraints);
+        return runStartTask(videoEl, constraints).then((startTask) => {
+          onRestarted();
+          return startTask;
+        });
       });
 
       const taskResult = await taskQueue.current;
